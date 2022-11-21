@@ -21,7 +21,7 @@ public:
 
     std::vector<size_t> Find(const std::string &element);
 
-    void PrintFindedPositions(std::vector<size_t> finded_positions);
+    void PrintFindedPositions(std::vector<size_t> &finded_positions);
 
 private:
     std::string file_data;

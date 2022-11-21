@@ -65,7 +65,7 @@ std::vector<size_t> InFileSearcher::Find(const std::string &mode, const std::str
     }
 }
 
-void InFileSearcher::PrintFindedPositions(std::vector<size_t> finded_positions) {
+void InFileSearcher::PrintFindedPositions(std::vector<size_t> &finded_positions) {
     std::sort(finded_positions.begin(), finded_positions.end());
     for(int i = 0; i < finded_positions.size(); i++){
         std:: cout << finded_positions[i];
