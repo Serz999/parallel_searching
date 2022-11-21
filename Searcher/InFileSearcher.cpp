@@ -58,6 +58,9 @@ std::vector<size_t> InFileSearcher::Find(const std::string &mode, const std::str
         for(size_t i = 0; i < max_thread_count - 1; i++){
             threads[i] = std::async(search_process, i, max_thread_count - 1);
         }
+        for(size_t i = 0; i < threads.size(); i++){
+            threads[i].wait();
+        }
         return finded_positions;
     } else {
         std::cout << "unknown mode, start default mode(async)";
