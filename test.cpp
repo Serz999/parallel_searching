@@ -5,7 +5,7 @@
 
 std::string init_data;
 std::string unicode_init_data;
-SimpleTimer timer("README.md");
+SimpleTimer timer("../README.md");
 
 TEST(fileload, initial_test){
     InFileSearcher elem_finder("data.tmp");
@@ -13,7 +13,7 @@ TEST(fileload, initial_test){
 }
 
 TEST(searching, async_mode){
-    std::ofstream ofs("README.md");
+    std::ofstream ofs("../README.md");
     ofs.close();
     InFileSearcher elem_finder("data.tmp");
     timer.Start();
@@ -43,21 +43,17 @@ TEST(warnings, unknown_mode){
 }
 
 TEST(searching, async_generate_statistic){
-    ASSERT_NO_FATAL_FAILURE({
-        InFileSearcher elem_finder("HarryPotter.txt");
-        timer.Start();
-        std::vector<size_t> positions = elem_finder.Find("Harry");
-        timer.Stop("## [big data] async_mode");
-    });
+    InFileSearcher elem_finder("../HarryPotter.txt");
+    timer.Start();
+    std::vector<size_t> positions = elem_finder.Find("Harry");
+    timer.Stop("## [big data] async_mode");
 }
 
 TEST(searching, sync_generate_statistic){
-    ASSERT_NO_FATAL_FAILURE({
-        InFileSearcher elem_finder("HarryPotter.txt");
-        timer.Start();
-        std::vector<size_t> positions = elem_finder.Find("sync", "Harry");
-        timer.Stop("## [big data] sync_mode");
-    });
+    InFileSearcher elem_finder("../HarryPotter.txt");
+    timer.Start();
+    std::vector<size_t> positions = elem_finder.Find("sync", "Harry");
+    timer.Stop("## [big data] sync_mode");
 }
 
 TEST(searching, unicode_handling){
