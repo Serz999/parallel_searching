@@ -1,9 +1,11 @@
 #include <iostream>
-#include "Searcher/InFileSearcher.h"
 #include <gtest/gtest.h>
+#include "Searcher/InFileSearcher.h"
+#include "SimpleTimer/SimpleTimer.h"
 
 std::string init_data;
 std::string unicode_init_data;
+SimpleTimer timer("../compare.txt");
 
 TEST(fileload, initial_test){
     InFileSearcher elem_finder("data.tmp");
@@ -12,7 +14,9 @@ TEST(fileload, initial_test){
 
 TEST(searching, async_mode){
     InFileSearcher elem_finder("data.tmp");
+    timer.Start();
     std::vector<size_t> positions = elem_finder.Find("word");
+    timer.Stop("[small data] async_mode");
     elem_finder.PrintFindedPositions(positions);
     std::vector<size_t> assert_positions = {0, 16, 30, 35, 47};
     ASSERT_EQ(positions, assert_positions);
@@ -20,7 +24,9 @@ TEST(searching, async_mode){
 
 TEST(searching, sync_mode){
     InFileSearcher elem_finder("data.tmp");
+    timer.Start();
     std::vector<size_t> positions = elem_finder.Find("sync", "word");
+    timer.Stop("[small data] sync_mode");
     elem_finder.PrintFindedPositions(positions);
     std::vector<size_t> assert_positions = {0, 16, 30, 35, 47};
     ASSERT_EQ(positions, assert_positions);
@@ -32,6 +38,26 @@ TEST(warnings, unknown_mode){
     elem_finder.PrintFindedPositions(positions);
     std::vector<size_t> assert_positions = {0, 16, 30, 35, 47};
     ASSERT_EQ(positions, assert_positions);
+}
+
+TEST(searching, async_generate_statistic){
+    ASSERT_NO_FATAL_FAILURE({
+        InFileSearcher elem_finder("../HarryPotter.txt");
+        timer.Start();
+        std::vector<size_t> positions = elem_finder.Find("Harry");
+        timer.Stop("[big data] async_mode");
+        elem_finder.PrintFindedPositions(positions);
+    });
+}
+
+TEST(searching, sync_generate_statistic){
+    ASSERT_NO_FATAL_FAILURE({
+        InFileSearcher elem_finder("../HarryPotter.txt");
+        timer.Start();
+        std::vector<size_t> positions = elem_finder.Find("sync", "Harry");
+        timer.Stop("[big data] sync_mode");
+        elem_finder.PrintFindedPositions(positions);
+    });
 }
 
 TEST(searching, unicode_handling){

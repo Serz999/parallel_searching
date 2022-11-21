@@ -22,6 +22,9 @@ SET(CMAKE_CXX_FLAGS -pthread)
 add_subdirectory(Searcher)
 target_link_libraries(${TEST_NAME} SearcherLib)
 
+add_subdirectory(SimpleTimer)
+target_link_libraries(${TEST_NAME} SimpleTimerLib)
+
 enable_testing()
 include(GoogleTest)
 gtest_discover_tests(${TEST_NAME})
