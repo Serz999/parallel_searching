@@ -11,25 +11,25 @@ TEST(fileload, initial_test){
 
 TEST(searching, async_mode){
     InFileSearcher elem_finder("tmp_data.txt");
-    std::vector<size_t> positions = elem_finder.Find("РУССКИЙ ТЕКСТ");
+    std::vector<size_t> positions = elem_finder.Find("word");
     elem_finder.PrintFindedPositions(positions);
-    std::vector<size_t> assert_positions = {0, 20, 39, 64};
+    std::vector<size_t> assert_positions = {0, 16, 30, 35, 47};
     ASSERT_EQ(positions, assert_positions);
 }
 
 TEST(searching, sync_mode){
     InFileSearcher elem_finder("tmp_data.txt");
-    std::vector<size_t> positions = elem_finder.Find("sync", "РУССКИЙ ТЕКСТ");
+    std::vector<size_t> positions = elem_finder.Find("sync", "word");
     elem_finder.PrintFindedPositions(positions);
-    std::vector<size_t> assert_positions = {0, 20, 39, 64};
+    std::vector<size_t> assert_positions = {0, 16, 30, 35, 47};
     ASSERT_EQ(positions, assert_positions);
 }
 
 TEST(warnings, unknown_mode){
     InFileSearcher elem_finder("tmp_data.txt");
-    std::vector<size_t> positions = elem_finder.Find("mode", "РУССКИЙ ТЕКСТ");
+    std::vector<size_t> positions = elem_finder.Find("special_mode", "word");
     elem_finder.PrintFindedPositions(positions);
-    std::vector<size_t> assert_positions = {0, 20, 39, 64};
+    std::vector<size_t> assert_positions = {0, 16, 30, 35, 47};
     ASSERT_EQ(positions, assert_positions);
 }
 
@@ -40,8 +40,7 @@ TEST(exceptions, filepath_error){
 }
 
 int main(int argc, char **argv) {
-    init_data = "РУССКИЙ ТЕКСТ слово РУССКИЙ ТЕКСТ\n"
-                "буквы РУССКИЙ ТЕКСТ много слов РУССКИЙ ТЕКСТ";
+    init_data = "word aasdasdasd word asdasdas word word awdawd word";
     std::ofstream ofs("tmp_data.txt");
     ofs << init_data;
     ofs.close();

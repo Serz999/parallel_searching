@@ -61,7 +61,7 @@ std::vector<size_t> InFileSearcher::Find(const std::string &mode, const std::str
         return finded_positions;
     } else {
         std::cout << "unknown mode, start default mode(async)";
-        Find("async", element);
+        return Find("async", element);
     }
 }
 
